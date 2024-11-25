@@ -43,7 +43,6 @@ int main() {
     return 0;
 }
 
-// Fungsi-fungsi
 void welcomeScreen() {
     printf("=================================\n");
     printf("     Selamat Datang di CodeBrew  \n");
