@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <string.h>
+
 // Fungsi prototipe
 void welcomeScreen();
 void displayMenu();
@@ -64,6 +65,7 @@ void login() {
 }
 
 
+
 void displayMenu() {
     printf("========== Menu ==========\n");
     printf("1. Kopi Hitam   - Rp 15.000\n");
@@ -125,11 +127,40 @@ void takeOrder() {
     displayPayment();
 }
 
+// void displayPayment() {
+//     printf("========= Pembayaran =========\n");
+//     printf("1. Cash\n");
+//     printf("2. Cashless\n");
+//     printf("==============================\n");
+// }
+
 void displayPayment() {
+    int paymentMethod;
     printf("========= Pembayaran =========\n");
     printf("1. Cash\n");
     printf("2. Cashless\n");
     printf("==============================\n");
+    printf("Pilih metode pembayaran: ");
+    scanf("%d", &paymentMethod);
+
+    switch (paymentMethod) {
+        case 1:
+            printf("Silakan lakukan pembayaran ke kasir.\n");
+            break;
+        case 2: {
+            char cashlessCode[10];
+            sprintf(cashlessCode, "CB%04d", rand() % 10000);
+            printf("Kode pembayaran Anda: %s\n", cashlessCode);
+            printf("Gunakan kode ini untuk pembayaran melalui aplikasi.\n");
+            break;
+        }
+        default:
+            printf("Metode pembayaran tidak valid.\n");
+    }
+
+    printf("\nTekan Enter untuk kembali ke menu utama...\n");
+    getchar(); 
+    getchar(); 
 }
 
 void reserveTable() {
@@ -142,10 +173,6 @@ void reserveTable() {
         printf("Nomor meja tidak valid.\n");
     }
 }
-
-
-
-
 
 // #include <stdio.h>
 
