@@ -1,14 +1,16 @@
 #include <stdio.h>
-
+#include <string.h>
 // Fungsi prototipe
 void welcomeScreen();
 void displayMenu();
 void takeOrder();
 void reserveTable();
 void displayPayment();
+void login();
 
 int main() {
     int choice;
+    login();
     do {
         welcomeScreen();
         printf("1. Pilih Menu\n");
@@ -41,6 +43,26 @@ void welcomeScreen() {
     printf("     Selamat Datang di CodeBrew  \n");
     printf("=================================\n");
 }
+
+void login() {
+    char username[20], password[20];
+
+    printf("=== Selamat Datang di CodeBrew ===\n");
+    printf("Silakan login terlebih dahulu.\n");
+
+    printf("Username: ");
+    scanf("%s", username);
+    printf("Password: ");
+    scanf("%s", password);
+
+    if (strcmp(username, "admin") == 0 && strcmp(password, "1234") == 0) {
+        printf("Login berhasil!\n\n");
+    } else {
+        printf("Username atau password salah. Silakan coba lagi.\n\n");
+        login();
+    }
+}
+
 
 void displayMenu() {
     printf("========== Menu ==========\n");
