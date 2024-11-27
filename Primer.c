@@ -156,7 +156,8 @@ void processCashPayment(int totalPrice) {
 
     if (cash < totalPrice) {
         printf("Uang yang Anda masukkan kurang Rp %d. Silakan ulangi pembayaran.\n", totalPrice - cash);
-        processCashPayment(totalPrice);
+        
+        (totalPrice);
     } else {
         change = cash - totalPrice;
         if (change > 0) {
