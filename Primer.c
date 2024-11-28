@@ -1,12 +1,13 @@
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 
 // Fungsi prototipe
-void welcomeScreen();
-void displayMenu();
 void takeOrder();
 void reserveTable();
 void displayPayment();
+void welcomeScreen();
+void displayMenu();
 void processCashPayment(int totalPrice);
 void login();
 
@@ -46,6 +47,15 @@ void welcomeScreen() {
     printf("=================================\n");
 }
 
+void displayMenu() {
+    printf("========== Menu ==========\n");
+    printf("1. Kopi Hitam   - Rp 15.000\n");
+    printf("2. Latte        - Rp 20.000\n");
+    printf("3. Cappuccino   - Rp 25.000\n");
+    printf("4. Kue Brownies - Rp 10.000\n");
+    printf("==========================\n");
+}
+
 void login() {
     char username[20], password[20];
 
@@ -63,15 +73,6 @@ void login() {
         printf("Username atau password salah. Silakan coba lagi.\n\n");
         login();
     }
-}
-
-void displayMenu() {
-    printf("========== Menu ==========\n");
-    printf("1. Kopi Hitam   - Rp 15.000\n");
-    printf("2. Latte        - Rp 20.000\n");
-    printf("3. Cappuccino   - Rp 25.000\n");
-    printf("4. Kue Brownies - Rp 10.000\n");
-    printf("==========================\n");
 }
 
 void takeOrder() {
@@ -124,28 +125,33 @@ void takeOrder() {
 
     printf("Total harga pesanan Anda: Rp %d\n", totalPrice);
     displayPayment();
-
-    int paymentChoice;
-    printf("Pilih metode pembayaran: ");
-    scanf("%d", &paymentChoice);
-
-    switch (paymentChoice) {
-        case 1:
-            processCashPayment(totalPrice);
-            break;
-        case 2:
-            printf("Pembayaran berhasil menggunakan metode cashless.\n");
-            break;
-        default:
-            printf("Metode pembayaran tidak valid. Kembali ke menu utama.\n");
-    }
 }
 
-void displayPayment() {
+void displayPayment(int totalPrice) {
+    int paymentMethod, cash, change;
     printf("========= Pembayaran =========\n");
     printf("1. Cash\n");
     printf("2. Cashless\n");
     printf("==============================\n");
+    printf("Pilih metode pembayaran: ");
+    scanf("%d", &paymentMethod);
+
+    switch (paymentMethod) {
+        case 1:
+            processCashPayment(totalPrice);
+            break;
+        case 2: {
+            char cashlessCode[10];
+            sprintf(cashlessCode, "CB%04d", rand() % 10000);
+            printf("Kode pembayaran Anda: %s\n", cashlessCode);
+            printf("Gunakan kode ini untuk pembayaran melalui aplikasi.\n");
+            break;
+        }
+        default:
+            printf("Metode pembayaran tidak valid.\n");
+    }
+
+    getchar();
 }
 
 void processCashPayment(int totalPrice) {
@@ -156,8 +162,7 @@ void processCashPayment(int totalPrice) {
 
     if (cash < totalPrice) {
         printf("Uang yang Anda masukkan kurang Rp %d. Silakan ulangi pembayaran.\n", totalPrice - cash);
-        
-        (totalPrice);
+        processCashPayment(totalPrice);
     } else {
         change = cash - totalPrice;
         if (change > 0) {
