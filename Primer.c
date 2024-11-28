@@ -124,7 +124,7 @@ int takeOrder() {
         scanf("%d", &continueOrder);
     } while (continueOrder == 1);
 
-    return totalPrice; // Kembalikan total harga ke pemanggil
+    return totalPrice;
 }
 
 void displayPayment(int totalPrice) {
