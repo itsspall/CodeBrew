@@ -3,16 +3,16 @@
 #include <stdlib.h>
 
 // Fungsi prototipe
-void takeOrder();
+int takeOrder();
 void reserveTable();
-void displayPayment();
+void displayPayment(int totalPrice);
 void welcomeScreen();
 void displayMenu();
 void processCashPayment(int totalPrice);
 void login();
 
 int main() {
-    int choice;
+    int choice, totalPrice = 0;
     login();
     do {
         welcomeScreen();
@@ -24,7 +24,8 @@ int main() {
 
         switch (choice) {
             case 1:
-                takeOrder();
+                totalPrice = takeOrder(); // Simpan total harga dari takeOrder()
+                displayPayment(totalPrice); // Kirim totalPrice ke displayPayment()
                 break;
             case 2:
                 reserveTable();
@@ -75,7 +76,7 @@ void login() {
     }
 }
 
-void takeOrder() {
+int takeOrder() {
     int menuItem, quantity;
     int totalPrice = 0;
     int continueOrder;
@@ -87,7 +88,7 @@ void takeOrder() {
 
         if (menuItem == 0) {
             printf("Kembali ke menu utama...\n");
-            return;
+            return totalPrice;
         }
 
         switch (menuItem) {
@@ -123,13 +124,13 @@ void takeOrder() {
         scanf("%d", &continueOrder);
     } while (continueOrder == 1);
 
-    printf("Total harga pesanan Anda: Rp %d\n", totalPrice);
-    displayPayment();
+    return totalPrice; // Kembalikan total harga ke pemanggil
 }
 
 void displayPayment(int totalPrice) {
-    int paymentMethod, cash, change;
+    int paymentMethod;
     printf("========= Pembayaran =========\n");
+    printf("Total harga pesanan Anda: Rp %d\n", totalPrice);
     printf("1. Cash\n");
     printf("2. Cashless\n");
     printf("==============================\n");
@@ -150,8 +151,6 @@ void displayPayment(int totalPrice) {
         default:
             printf("Metode pembayaran tidak valid.\n");
     }
-
-    getchar();
 }
 
 void processCashPayment(int totalPrice) {
