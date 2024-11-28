@@ -7,6 +7,9 @@ void displayMenu();
 void takeOrder();
 void reserveTable();
 void displayPayment();
+void displayTables();
+void cancelReservation();
+void makeReservation();
 void processCashPayment(int totalPrice);
 void login();
 
@@ -165,16 +168,103 @@ void processCashPayment(int totalPrice) {
         } else {
             printf("Pembayaran berhasil. Tidak ada kembalian.\n");
         }
+        void displayTables(const vector<string>& tables) {
+    cout << "Daftar Meja:\n";
+    for (size_t i = 0; i < tables.size(); ++i) {
+        cout << "Meja " << i + 1 << ": " 
+             << (tables[i].empty() ? "Tersedia" : "Dipesan oleh " + tables[i]) 
+             << endl;
     }
 }
 
-void reserveTable() {
+
+void makeReservation(vector<string>& tables) {
     int tableNumber;
-    printf("Masukkan nomor meja yang ingin dipesan (1-10): ");
-    scanf("%d", &tableNumber);
-    if (tableNumber >= 1 && tableNumber <= 10) {
-        printf("Meja %d berhasil dipesan!\n", tableNumber);
-    } else {
-        printf("Nomor meja tidak valid.\n");
+    string customerName;
+
+    cout << "Masukkan nomor meja yang ingin dipesan: ";
+    cin >> tableNumber;
+
+
+    if (tableNumber < 1 || tableNumber > tables.size()) {
+        cout << "Nomor meja tidak valid.\n";
+        return;
+    }
+
+    
+    if (!tables[tableNumber - 1].empty()) {
+        cout << "Meja " << tableNumber << " sudah dipesan oleh " << tables[tableNumber - 1] << ".\n";
+        return;
+    }
+
+    cin.ignore(); 
+    cout << "Masukkan nama pelanggan: ";
+    getline(cin, customerName);
+
+    
+    tables[tableNumber - 1] = customerName;
+    cout << "Reservasi berhasil untuk Meja " << tableNumber << ".\n";
+}
+
+
+void cancelReservation(vector<string>& tables) {
+    int tableNumber;
+
+    cout << "Masukkan nomor meja yang ingin dibatalkan: ";
+    cin >> tableNumber;
+
+    
+    if (tableNumber < 1 || tableNumber > tables.size()) {
+        cout << "Nomor meja tidak valid.\n";
+        return;
+    }
+
+    
+    if (tables[tableNumber - 1].empty()) {
+        cout << "Meja " << tableNumber << " belum dipesan.\n";
+        return;
+    }
+
+    
+    tables[tableNumber - 1].clear();
+    cout << "Reservasi untuk Meja " << tableNumber << " berhasil dibatalkan.\n";
+}
+
+
+int main() {
+    const int numberOfTables = 10; 
+    vector<string> tables(numberOfTables, ""); 
+
+    while (true) {
+        cout << "\n=== Sistem Reservasi Meja ===\n";
+        cout << "1. Lihat daftar meja\n";
+        cout << "2. Buat reservasi\n";
+        cout << "3. Batalkan reservasi\n";
+        cout << "4. Keluar\n";
+        cout << "Pilih menu: ";
+
+        int choice;
+        cin >> choice;
+
+        switch (choice) {
+            case 1:
+                displayTables(tables);
+                break;
+            case 2:
+                makeReservation(tables);
+                break;
+            case 3:
+                cancelReservation(tables);
+                break;
+            case 4:
+                cout << "Terima kasih telah menggunakan sistem reservasi.\n";
+                return 0;
+            default:
+                cout << "Pilihan tidak valid. Coba lagi.\n";
+        }
+    }
+
+    return 0;
+}
     }
 }
