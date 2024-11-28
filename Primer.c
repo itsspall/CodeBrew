@@ -40,15 +40,24 @@ int main() {
 
 // Fungsi-fungsi
 void welcomeScreen() {
-    printf("=================================\n");
-    printf("     Selamat Datang di CodeBrew  \n");
-    printf("=================================\n");
+    printf("==========================                               =================================\n");
+    printf("                            Selamat Datang di CodeBrew  \n");
+    printf("==========================                               ================================\n");
 }
 
 void login() {
     char username[20], password[20];
 
-    printf("=== Selamat Datang di CodeBrew ===\n");
+    printf("=========================   Silahkan Masukan Data Anda terlebih dahulu   =========================================\n");
+    printf("                                        ( (     \n");
+    printf("                                        ) )    \n");
+    printf("                                    ............  \n");
+    printf("                                    |          | \n");
+    printf("                                    | CODEBREW | \n");
+    printf("                                    |          | \n");
+    printf("                                    ............  \n");     
+    printf("==================================================================================================================\n");
+
     printf("Silakan login terlebih dahulu.\n");
 
     printf("Username: ");
@@ -71,7 +80,7 @@ void displayMenu() {
     printf("1. Kopi Hitam   - Rp 15.000\n");
     printf("2. Latte        - Rp 20.000\n");
     printf("3. Cappuccino   - Rp 25.000\n");
-    printf("4. Kue Brownies - Rp 10.000\n");
+    printf("4. Machiato     - Rp 10.000\n");
     printf("==========================\n");
 }
 
@@ -110,7 +119,7 @@ void takeOrder() {
                 totalPrice += quantity * 25000;
                 break;
             case 4:
-                printf("Anda memilih Kue Brownies.\n");
+                printf("Anda memilih Machiato.\n");
                 printf("Masukkan jumlah pesanan: ");
                 scanf("%d", &quantity);
                 totalPrice += quantity * 10000;
@@ -147,15 +156,15 @@ void displayPayment() {
         case 1:
             printf("Silakan lakukan pembayaran ke kasir.\n");
             break;
-        case 2: {
-            char cashlessCode[10];
-            sprintf(cashlessCode, "CB%04d", rand() % 10000);
-            printf("Kode pembayaran Anda: %s\n", cashlessCode);
-            printf("Gunakan kode ini untuk pembayaran melalui aplikasi.\n");
-            break;
-        }
-        default:
-            printf("Metode pembayaran tidak valid.\n");
+        // case 2: {
+        //     char cashlessCode[10];
+        //     sprintf(cashlessCode, "CB%04d");
+        //     printf("Kode pembayaran Anda: %s\n", cashlessCode);
+        //     printf("Gunakan kode ini untuk pembayaran melalui aplikasi.\n");
+        //     break;
+        // }
+        // default:
+        //     printf("Metode pembayaran tidak valid.\n");
     }
 
     printf("\nTekan Enter untuk kembali ke menu utama...\n");
