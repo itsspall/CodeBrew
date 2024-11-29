@@ -10,6 +10,7 @@ void welcomeScreen();
 void displayMenu();
 void processCashPayment(int totalPrice);
 void login();
+void rekapitulasi();
 
 int main() {
     int choice, totalPrice = 0;
@@ -18,7 +19,8 @@ int main() {
         welcomeScreen();
         printf("1. Pilih Menu\n");
         printf("2. Reservasi Meja\n");
-        printf("3. Keluar\n");
+        printf("3. Rekapitulasi\n");
+        printf("4. Keluar\n");
         printf("Pilih opsi: ");
         scanf("%d", &choice);
 
@@ -31,6 +33,9 @@ int main() {
                 reserveTable();
                 break;
             case 3:
+                rekapitulasi();
+                break;
+            case 4:
                 printf("Terima kasih telah menggunakan CodeBrew!\n");
                 break;
             default:
@@ -43,9 +48,9 @@ int main() {
 
 // Fungsi-fungsi
 void welcomeScreen() {
-    printf("==========================                               =================================\n");
+    printf("==========================                               ========================\n");
     printf("                            Selamat Datang di CodeBrew  \n");
-    printf("==========================                               ================================\n");
+    printf("==========================                               ========================\n");
 }
 
 void displayMenu() {
@@ -60,15 +65,15 @@ void displayMenu() {
 void login() {
     char username[20], password[20];
 
-    printf("=========================   Silahkan Masukan Data Anda terlebih dahulu   =========================================\n");
-    printf("                                        ( (     \n");
-    printf("                                        ) )    \n");
-    printf("                                    ............  \n");
-    printf("                                    |          | \n");
-    printf("                                    | CODEBREW | \n");
-    printf("                                    |          | \n");
-    printf("                                    ............  \n");     
-    printf("==================================================================================================================\n");
+    printf("=========================   Silahkan Masukan Data Anda terlebih dahulu   ========================\n");
+    printf("                                              ( (     \n");
+    printf("                                              ) )    \n");
+    printf("                                          ............  \n");
+    printf("                                          |          | \n");
+    printf("                                          | CODEBREW | \n");
+    printf("                                          |          | \n");
+    printf("                                          ............  \n");     
+    printf("==================================================================================================\n");
 
     printf("Silakan login terlebih dahulu.\n");
 
@@ -150,16 +155,17 @@ void displayPayment(int totalPrice) {
         case 1:
             processCashPayment(totalPrice);
             break;
-        // case 2: {
-        //     char cashlessCode[10];
-        //     sprintf(cashlessCode, "CB%04d");
-        //     printf("Kode pembayaran Anda: %s\n", cashlessCode);
-        //     printf("Gunakan kode ini untuk pembayaran melalui aplikasi.\n");
-        //     break;
-        // }
-        // default:
-        //     printf("Metode pembayaran tidak valid.\n");
+        case 2: {
+            char cashlessCode[10];
+            sprintf(cashlessCode, "CB%04d");
+            printf("Kode pembayaran Anda: %s\n", cashlessCode);
+            printf("Gunakan kode ini untuk pembayaran melalui aplikasi.\n");
+            break;
+        }
+        default:
+            printf("Metode pembayaran tidak valid.\n");
     }
+    
 }
 
 void processCashPayment(int totalPrice) {
@@ -190,4 +196,8 @@ void reserveTable() {
     } else {
         printf("Nomor meja tidak valid.\n");
     }
+}
+
+void rekapitulasi() {
+
 }
