@@ -48,13 +48,16 @@ void welcomeScreen() {
 }
 
 void displayMenu() {
-    printf("========== Menu ==========\n");
-    printf("1. Kopi Hitam   - Rp 15.000\n");
-    printf("2. Latte        - Rp 20.000\n");
-    printf("3. Cappuccino   - Rp 25.000\n");
-    printf("4. Kue Brownies - Rp 10.000\n");
-    printf("==========================\n");
+    printf("======= Menu Minuman ======\t========= Menu Makanan =========\n");
+    printf("1. Kopi Hitam   - Rp 15.000\t7.  Nasi Goreng      - Rp 30.000\n");
+    printf("2. Latte        - Rp 20.000\t8.  Mie Bangladesh   - Rp 25.000\n");
+    printf("3. Cappuccino   - Rp 25.000\t9.  Sandwich         - Rp 20.000\n");
+    printf("4. Lemon Tea    - Rp 12.000\t10. Macaroni         - Rp 15.000\n");
+    printf("5. Lychee Tea   - Rp 14.000\t11. Salad Buah       - Rp 15.000\n");
+    printf("6. Ice Tea      - Rp 10.000\t12. Salad Buah       - Rp 15.000\n");
+    printf("===========================\t=================================\n");
 }
+
 
 void login() {
     char username[20], password[20];
@@ -119,11 +122,48 @@ void takeOrder() {
                 totalPrice += quantity * 25000;
                 break;
             case 4:
-                printf("Anda memilih Machiato.\n");
+                printf("Anda memilih Lemon Tea.\n");
+                printf("Masukkan jumlah pesanan: ");
+                scanf("%d", &quantity);
+                totalPrice += quantity * 12000;
+                break;
+            case 5:
+                printf("Anda memilih Lychee Tea.\n");
+                printf("Masukkan jumlah pesanan: ");
+                scanf("%d", &quantity);
+                totalPrice += quantity * 14000;
+                break;
+            case 6:
+                printf("Anda memilih Ice Tea.\n");
                 printf("Masukkan jumlah pesanan: ");
                 scanf("%d", &quantity);
                 totalPrice += quantity * 10000;
                 break;
+            case 7:
+                printf("Anda memilih Nasi Goreng.\n");
+                printf("MAsukan jumlah pesanan: ");
+                scanf("%d", &quantity);
+                totalPrice += quantity * 30000;
+                break;
+             case 8:
+                printf("Anda memilih Mie Goreng.\n");
+                printf("Masukkan jumlah pesanan: ");
+                scanf("%d", &quantity);
+                totalPrice += quantity * 25000;
+                break;
+            case 9:
+                printf("Anda memilih Sandwich.\n");
+                printf("Masukkan jumlah pesanan: ");
+                scanf("%d", &quantity);
+                totalPrice += quantity * 20000;
+                break;
+            case 10:
+                printf("Anda memilih Salad Buah.\n");
+                printf("Masukkan jumlah pesanan: ");
+                scanf("%d", &quantity);
+                totalPrice += quantity * 15000;
+                break;
+
             default:
                 printf("Pilihan tidak valid. Coba lagi.\n");
         }
@@ -133,7 +173,7 @@ void takeOrder() {
     } while (continueOrder == 1);
 
     printf("Total harga pesanan Anda: Rp %d\n", totalPrice);
-    displayPayment();
+    displayPayment(totalPrice);
 }
 
 void displayPayment(int totalPrice) {
