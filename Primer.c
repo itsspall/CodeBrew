@@ -43,9 +43,9 @@ int main() {
 
 // Fungsi-fungsi
 void welcomeScreen() {
-    printf("=================================\n");
-    printf("     Selamat Datang di CodeBrew  \n");
-    printf("=================================\n");
+    printf("==========================                               =================================\n");
+    printf("                            Selamat Datang di CodeBrew  \n");
+    printf("==========================                               ================================\n");
 }
 
 void displayMenu() {
@@ -60,7 +60,16 @@ void displayMenu() {
 void login() {
     char username[20], password[20];
 
-    printf("=== Selamat Datang di CodeBrew ===\n");
+    printf("=========================   Silahkan Masukan Data Anda terlebih dahulu   =========================================\n");
+    printf("                                        ( (     \n");
+    printf("                                        ) )    \n");
+    printf("                                    ............  \n");
+    printf("                                    |          | \n");
+    printf("                                    | CODEBREW | \n");
+    printf("                                    |          | \n");
+    printf("                                    ............  \n");     
+    printf("==================================================================================================================\n");
+
     printf("Silakan login terlebih dahulu.\n");
 
     printf("Username: ");
@@ -111,7 +120,7 @@ int takeOrder() {
                 totalPrice += quantity * 25000;
                 break;
             case 4:
-                printf("Anda memilih Kue Brownies.\n");
+                printf("Anda memilih Machiato.\n");
                 printf("Masukkan jumlah pesanan: ");
                 scanf("%d", &quantity);
                 totalPrice += quantity * 10000;
@@ -141,15 +150,15 @@ void displayPayment(int totalPrice) {
         case 1:
             processCashPayment(totalPrice);
             break;
-        case 2: {
-            char cashlessCode[10];
-            sprintf(cashlessCode, "CB%04d", rand() % 10000);
-            printf("Kode pembayaran Anda: %s\n", cashlessCode);
-            printf("Gunakan kode ini untuk pembayaran melalui aplikasi.\n");
-            break;
-        }
-        default:
-            printf("Metode pembayaran tidak valid.\n");
+        // case 2: {
+        //     char cashlessCode[10];
+        //     sprintf(cashlessCode, "CB%04d");
+        //     printf("Kode pembayaran Anda: %s\n", cashlessCode);
+        //     printf("Gunakan kode ini untuk pembayaran melalui aplikasi.\n");
+        //     break;
+        // }
+        // default:
+        //     printf("Metode pembayaran tidak valid.\n");
     }
 }
 
