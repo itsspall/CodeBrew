@@ -1,11 +1,14 @@
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
+
 // Fungsi prototipe
-void welcomeScreen();
-void displayMenu();
 void takeOrder();
 void reserveTable();
 void displayPayment();
+void welcomeScreen();
+void displayMenu();
+void processCashPayment(int totalPrice);
 void login();
 
 int main() {
@@ -39,15 +42,36 @@ int main() {
 
 // Fungsi-fungsi
 void welcomeScreen() {
-    printf("=================================\n");
-    printf("     Selamat Datang di CodeBrew  \n");
-    printf("=================================\n");
+    printf("==========================                               =================================\n");
+    printf("                            Selamat Datang di CodeBrew  \n");
+    printf("==========================                               ================================\n");
 }
+
+void displayMenu() {
+    printf("======= Menu Minuman ======\t========= Menu Makanan =========\n");
+    printf("1. Kopi Hitam   - Rp 15.000\t7.  Nasi Goreng      - Rp 30.000\n");
+    printf("2. Latte        - Rp 20.000\t8.  Mie Bangladesh   - Rp 25.000\n");
+    printf("3. Cappuccino   - Rp 25.000\t9.  Sandwich         - Rp 20.000\n");
+    printf("4. Lemon Tea    - Rp 12.000\t10. Macaroni         - Rp 15.000\n");
+    printf("5. Lychee Tea   - Rp 14.000\t11. Salad Buah       - Rp 15.000\n");
+    printf("6. Ice Tea      - Rp 10.000\t12. Salad Buah       - Rp 15.000\n");
+    printf("===========================\t=================================\n");
+}
+
 
 void login() {
     char username[20], password[20];
 
-    printf("=== Selamat Datang di CodeBrew ===\n");
+    printf("=========================   Silahkan Masukan Data Anda terlebih dahulu   =========================================\n");
+    printf("                                        ( (     \n");
+    printf("                                        ) )    \n");
+    printf("                                    ............  \n");
+    printf("                                    |          | \n");
+    printf("                                    | CODEBREW | \n");
+    printf("                                    |          | \n");
+    printf("                                    ............  \n");     
+    printf("==================================================================================================================\n");
+
     printf("Silakan login terlebih dahulu.\n");
 
     printf("Username: ");
@@ -63,16 +87,6 @@ void login() {
     }
 }
 
-
-void displayMenu() {
-    printf("========== Menu ==========\n");
-    printf("1. Kopi Hitam   - Rp 15.000\n");
-    printf("2. Latte        - Rp 20.000\n");
-    printf("3. Cappuccino   - Rp 25.000\n");
-    printf("4. Kue Brownies - Rp 10.000\n");
-    printf("==========================\n");
-}
-
 void takeOrder() {
     int menuItem, quantity;
     int totalPrice = 0;
@@ -85,7 +99,7 @@ void takeOrder() {
 
         if (menuItem == 0) {
             printf("Kembali ke menu utama...\n");
-            return; // Kembali ke menu utama
+            return;
         }
 
         switch (menuItem) {
@@ -108,11 +122,48 @@ void takeOrder() {
                 totalPrice += quantity * 25000;
                 break;
             case 4:
-                printf("Anda memilih Kue Brownies.\n");
+                printf("Anda memilih Lemon Tea.\n");
+                printf("Masukkan jumlah pesanan: ");
+                scanf("%d", &quantity);
+                totalPrice += quantity * 12000;
+                break;
+            case 5:
+                printf("Anda memilih Lychee Tea.\n");
+                printf("Masukkan jumlah pesanan: ");
+                scanf("%d", &quantity);
+                totalPrice += quantity * 14000;
+                break;
+            case 6:
+                printf("Anda memilih Ice Tea.\n");
                 printf("Masukkan jumlah pesanan: ");
                 scanf("%d", &quantity);
                 totalPrice += quantity * 10000;
                 break;
+            case 7:
+                printf("Anda memilih Nasi Goreng.\n");
+                printf("MAsukan jumlah pesanan: ");
+                scanf("%d", &quantity);
+                totalPrice += quantity * 30000;
+                break;
+             case 8:
+                printf("Anda memilih Mie Goreng.\n");
+                printf("Masukkan jumlah pesanan: ");
+                scanf("%d", &quantity);
+                totalPrice += quantity * 25000;
+                break;
+            case 9:
+                printf("Anda memilih Sandwich.\n");
+                printf("Masukkan jumlah pesanan: ");
+                scanf("%d", &quantity);
+                totalPrice += quantity * 20000;
+                break;
+            case 10:
+                printf("Anda memilih Salad Buah.\n");
+                printf("Masukkan jumlah pesanan: ");
+                scanf("%d", &quantity);
+                totalPrice += quantity * 15000;
+                break;
+
             default:
                 printf("Pilihan tidak valid. Coba lagi.\n");
         }
@@ -122,14 +173,53 @@ void takeOrder() {
     } while (continueOrder == 1);
 
     printf("Total harga pesanan Anda: Rp %d\n", totalPrice);
-    displayPayment();
+    displayPayment(totalPrice);
 }
 
-void displayPayment() {
+void displayPayment(int totalPrice) {
+    int paymentMethod, cash, change;
     printf("========= Pembayaran =========\n");
     printf("1. Cash\n");
     printf("2. Cashless\n");
     printf("==============================\n");
+    printf("Pilih metode pembayaran: ");
+    scanf("%d", &paymentMethod);
+
+    switch (paymentMethod) {
+        case 1:
+            processCashPayment(totalPrice);
+            break;
+        // case 2: {
+        //     char cashlessCode[10];
+        //     sprintf(cashlessCode, "CB%04d");
+        //     printf("Kode pembayaran Anda: %s\n", cashlessCode);
+        //     printf("Gunakan kode ini untuk pembayaran melalui aplikasi.\n");
+        //     break;
+        // }
+        // default:
+        //     printf("Metode pembayaran tidak valid.\n");
+    }
+
+    getchar();
+}
+
+void processCashPayment(int totalPrice) {
+    int cash, change;
+
+    printf("Silakan masukkan jumlah tunai: ");
+    scanf("%d", &cash);
+
+    if (cash < totalPrice) {
+        printf("Uang yang Anda masukkan kurang Rp %d. Silakan ulangi pembayaran.\n", totalPrice - cash);
+        processCashPayment(totalPrice);
+    } else {
+        change = cash - totalPrice;
+        if (change > 0) {
+            printf("Pembayaran berhasil. Kembalian Anda: Rp %d\n", change);
+        } else {
+            printf("Pembayaran berhasil. Tidak ada kembalian.\n");
+        }
+    }
 }
 
 void reserveTable() {
@@ -142,102 +232,3 @@ void reserveTable() {
         printf("Nomor meja tidak valid.\n");
     }
 }
-
-
-
-
-
-// #include <stdio.h>
-
-// // Fungsi prototipe
-// void welcomeScreen();
-// void displayMenu();
-// void takeOrder();
-// void payment();
-// void reserveTable();
-
-// int main() {
-//     int choice;
-//     do {
-//         welcomeScreen();
-//         printf("1. Lihat Menu\n");
-//         printf("2. Pesan Makanan\n");
-//         printf("3. Pembayaran\n");
-//         printf("4. Reservasi Meja\n");
-//         printf("5. Keluar\n");
-//         printf("Pilih opsi: ");
-//         scanf("%d", &choice);
-
-//         switch (choice) {
-//             case 1:
-//                 displayMenu();
-//                 break;
-//             case 2:
-//                 takeOrder();
-//                 break;
-//             case 3:
-//                 payment();
-//                 break;
-//             case 4:
-//                 reserveTable();
-//                 break;
-//             case 5:
-//                 printf("Terima kasih telah menggunakan CodeBrew!\n");
-//                 break;
-//             default:
-//                 printf("Pilihan tidak valid. Coba lagi.\n");
-//         }
-//     } while (choice != 5);
-
-//     return 0;
-// }
-
-// // Fungsi-fungsi
-// void welcomeScreen() {
-//     printf("=================================\n");
-//     printf("     Selamat Datang di CodeBrew  \n");
-//     printf("=================================\n");
-// }
-
-// void displayMenu() {
-//     printf("========== Menu ==========\n");
-//     printf("1. Kopi Hitam   - Rp 15.000\n");
-//     printf("2. Latte        - Rp 20.000\n");
-//     printf("3. Cappuccino   - Rp 25.000\n");
-//     printf("4. Kue Brownies - Rp 10.000\n");
-//     printf("==========================\n");
-// }
-
-// void takeOrder() {
-//     int menuItem, quantity;
-//     printf("Masukkan nomor menu yang ingin dipesan: ");
-//     scanf("%d", &menuItem);
-//     printf("Masukkan jumlah pesanan: ");
-//     scanf("%d", &quantity);
-//     printf("Pesanan telah dicatat!\n");
-// }
-
-// void payment() {
-//     int total = 100000; // Contoh total harga
-//     int paid;
-//     printf("Total yang harus dibayar: Rp %d\n", total);
-//     printf("Masukkan jumlah pembayaran: ");
-//     scanf("%d", &paid);
-
-//     if (paid >= total) {
-//         printf("Pembayaran sukses! Kembalian Anda: Rp %d\n", paid - total);
-//     } else {
-//         printf("Pembayaran gagal! Uang Anda kurang.\n");
-//     }
-// }git 
-
-// void reserveTable() {
-//     int tableNumber;
-//     printf("Masukkan nomor meja yang ingin dipesan (1-10): ");
-//     scanf("%d", &tableNumber);
-//     if (tableNumber >= 1 && tableNumber <= 10) {
-//         printf("Meja %d berhasil dipesan!\n", tableNumber);
-//     } else {
-//         printf("Nomor meja tidak valid.\n");
-//     }
-// }
