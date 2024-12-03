@@ -239,7 +239,11 @@ void rekapitulasi() {
     fclose(file);
 }
 
+<<<<<<< HEAD
 // Fungsi untuk menampilkan status meja
+=======
+// Fungsi reservasi meja
+>>>>>>> 3542191f94ab230876f7a86c74ab8641d5926528
 void displayTables(char tables[][NAME_LENGTH]) {
     printf("\nDaftar Meja:\n");
     for (int i = 0; i < TOTAL_TABLES; i++) {
