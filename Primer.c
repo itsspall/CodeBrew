@@ -2,9 +2,12 @@
 #include <string.h>
 #include <stdlib.h>
 #include <time.h>
+#define TOTAL_TABLES 10
+#define NAME_LENGTH 50
 
 // Deklarasi Fungsi
-void reserveTable();
+void displayTables(char tables[][NAME_LENGTH]);
+void makeReservation(char tables[][NAME_LENGTH]);
 int takeOrder(char *orderDetails);
 void displayPayment(int totalPrice, const char *customerName, const char *orderDetails);
 void welcomeScreen();
@@ -17,6 +20,7 @@ void rekapitulasi();
 int main() {
     int choice, totalPrice;
     char orderDetails[500], customerName[50];
+    char tables[TOTAL_TABLES][NAME_LENGTH] = {""};
 
     login();
 
@@ -37,7 +41,8 @@ int main() {
                 displayPayment(totalPrice, customerName, orderDetails);
                 break;
             case 2:
-                reserveTable();
+                displayTables(tables);
+                makeReservation(tables);
                 break;
             case 3:
                 rekapitulasi();
@@ -234,17 +239,47 @@ void rekapitulasi() {
     fclose(file);
 }
 
-// Fungsi reservasi meja
-void reserveTable() {
-    int tableNumber;
+// Fungsi untuk menampilkan status meja
+void displayTables(char tables[][NAME_LENGTH]) {
+    printf("\nDaftar Meja:\n");
+    for (int i = 0; i < TOTAL_TABLES; i++) {
+        if (strlen(tables[i]) == 0) {
+            printf("Meja %d: Tersedia\n", i + 1);
+        } else {
+            printf("Meja %d: Dipesan oleh %s\n", i + 1, tables[i]);
+        }
+    }
+}
 
-    printf("Masukkan nomor meja yang ingin dipesan (1-10): ");
+// Fungsi untuk membuat reservasi meja
+void makeReservation(char tables[][NAME_LENGTH]) {
+    int tableNumber;
+    char customerName[NAME_LENGTH];
+
+    printf("Masukkan nomor meja yang ingin dipesan (1-%d): \n", TOTAL_TABLES);
+    printf("Ketik 0 untuk kembali ke Menu: \n");
     scanf("%d", &tableNumber);
 
-    if (tableNumber >= 1 && tableNumber <= 10) {
-        printf("Meja nomor %d berhasil dipesan.\n", tableNumber);
-    } else {
-        printf("Nomor meja tidak valid.\n");
-        reserveTable();
+    if (tableNumber == 0) {
+        printf("Kembali ke menu utama.\n");
+        return;
     }
+
+    if (tableNumber < 1 || tableNumber > TOTAL_TABLES) {
+        printf("Nomor meja tidak valid. Silakan coba lagi.\n");
+        return;
+    }
+
+    if (strlen(tables[tableNumber - 1]) != 0) {
+        printf("Meja %d sudah dipesan oleh %s.\n", tableNumber, tables[tableNumber - 1]);
+        return;
+    }
+
+    printf("Masukkan nama pelanggan: ");
+    getchar();
+    fgets(customerName, NAME_LENGTH, stdin);
+    customerName[strcspn(customerName, "\n")] = '\0';
+
+    strcpy(tables[tableNumber - 1], customerName);
+    printf("Reservasi berhasil untuk Meja %d atas nama %s.\n", tableNumber, customerName);
 }
