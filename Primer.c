@@ -3,6 +3,24 @@
 #include <stdlib.h>
 #include <time.h>
 
+// Variabel global untuk menyimpan status pesanan
+char orderStatus[100] = "Belum ada pesanan.";
+
+// Fungsi untuk memperbarui status pesanan
+void updateOrderStatus(const char *status) {
+    strncpy(orderStatus, status, sizeof(orderStatus) - 1);
+    orderStatus[sizeof(orderStatus) - 1] = '\0'; // Pastikan null-terminated
+}
+
+
+// Fungsi untuk menampilkan status pesanan
+void trackOrder() {
+    printf("===== Status Pesanan =====\n");
+    printf("Status: %s\n", orderStatus);
+    printf("===========================\n");
+}
+
+
 // Deklarasi Fungsi
 void reserveTable();
 int takeOrder(char *orderDetails);
@@ -15,43 +33,77 @@ void saveTransaction(const char *customerName, const char *orderDetails, int tot
 void rekapitulasi();
 
 int main() {
-    int choice, totalPrice;
+    int choice, Adminchoice, totalPrice;
     char orderDetails[500], customerName[50];
 
-    login();
-
     do {
-        welcomeScreen();
-        printf("1. Pilih Menu\n");
-        printf("2. Reservasi Meja\n");
-        printf("3. Rekapitulasi\n");
-        printf("4. Keluar\n");
-        printf("Pilih opsi: ");
+             //Pilihan User
+        printf("============== Pilihan User =============\n");
+        printf("1. Admin\n");
+        printf("2. Pelanggan\n");
+        printf("3. Keluar\n");
+        printf("Pilih Opsi: ");
         scanf("%d", &choice);
 
-        switch (choice) {
-            case 1:
-                printf("Masukkan nama pelanggan: ");
-                scanf(" %[^\n]", customerName);
-                totalPrice = takeOrder(orderDetails);
-                displayPayment(totalPrice, customerName, orderDetails);
-                break;
-            case 2:
-                reserveTable();
-                break;
-            case 3:
-                rekapitulasi();
-                break;
-            case 4:
-                printf("Terima kasih telah menggunakan CodeBrew!\n");
-                break;
-            default:
-                printf("Pilihan tidak valid. Coba lagi.\n");
-        }
-    } while (choice != 4);
+        if (choice == 1){
+            login();
+            do{
+                 welcomeScreen();
+                printf("1. Pilih Menu\n");
+                printf("2. Reservasi Meja\n");
+                printf("3. Rekapitulasi\n");
+                printf("4. Keluar\n");
+                printf("Pilih opsi: ");
+                scanf("%d", &Adminchoice);
 
+                switch (Adminchoice){
+                    case 1:
+                        printf("Masukkan nama pelanggan: ");
+                        scanf(" %[^\n]", customerName);
+                        totalPrice = takeOrder(orderDetails);
+                        displayPayment(totalPrice, customerName, orderDetails);
+                        break;
+                    case 2:
+                        reserveTable();
+                        break;
+                    case 3:
+                        rekapitulasi();
+                        break;
+                    case 4:
+                        printf("Keluar dari Menu Admin\n");
+                        break;
+                    default:
+                        printf("Pilihan tidak valid. Coba lagi.\n");
+                }
+            } while (Adminchoice != 4);
+        }else if (choice == 2) {
+            int customerChoice;
+        do {
+            printf("=== Menu Pelanggan ===\n");
+            printf("1. Lihat Menu\n");
+            printf("2. Lacak Pesanan\n");
+            printf("3. Keluar\n");
+            printf("Pilih opsi: ");
+            scanf("%d", &customerChoice);
+            if (customerChoice == 1) {
+                displayMenu();
+            } else if (customerChoice == 2) {
+                trackOrder();
+            } else if (customerChoice == 3) {
+                printf("Terima kasih telah menggunakan layanan kami.\n");
+            } else {
+                printf("Pilihan tidak valid. Silakan coba lagi.\n");
+            }
+        } while (customerChoice != 3);  
+    } else if (choice == 3) {
+        printf("Terima kasih telah menggunakan sistem kami.\n");
+    } else {
+        printf("Pilihan tidak valid. Silakan coba lagi.\n");
+    }
+    }while (choice != 3);
     return 0;
 }
+
 
 // Fungsi login
 void login() {
@@ -84,8 +136,8 @@ void displayMenu() {
     printf("1. Kopi Hitam   - Rp 15.000\t7.  Nasi Goreng      - Rp 30.000\n");
     printf("2. Latte        - Rp 20.000\t8.  Mie Bangladesh   - Rp 25.000\n");
     printf("3. Cappuccino   - Rp 25.000\t9.  Sandwich         - Rp 20.000\n");
-    printf("4. Lemon Tea    - Rp 12.000\t10. Macaroni         - Rp 15.000\n");
-    printf("5. Lychee Tea   - Rp 14.000\t11. Salad Buah       - Rp 15.000\n");
+    printf("4. Lemon Tea    - Rp 12.000\t10. Macaroni         - Rp 16.000\n");
+    printf("5. Lychee Tea   - Rp 14.000\t11. Ice Cream        - Rp 18.000\n");
     printf("6. Ice Tea      - Rp 10.000\t12. Salad Buah       - Rp 15.000\n");
     printf("===========================\t=================================\n");
 }
@@ -109,43 +161,51 @@ int takeOrder(char *orderDetails) {
 
         switch (menuItem) {
             case 1:
-                strcat(orderDetails, "Kopi Hitam x");
+                sprintf(orderDetails + strlen(orderDetails), "Kopi Hitam x%d, ", quantity);
                 totalPrice += quantity * 15000;
                 break;
             case 2:
-                strcat(orderDetails, "Latte x");
+                sprintf(orderDetails + strlen(orderDetails), "Latte x%d, ", quantity);
                 totalPrice += quantity * 20000;
                 break;
             case 3:
-                strcat(orderDetails, "Cappuccino x");
+                sprintf(orderDetails + strlen(orderDetails), "Cappuccino x%d, ", quantity);
                 totalPrice += quantity * 25000;
                 break;
             case 4:
-                strcat(orderDetails, "Lemon Tea x");
+                sprintf(orderDetails + strlen(orderDetails), "Lemon Tea x%d, ", quantity);
                 totalPrice += quantity * 12000;
                 break;
             case 5:
-                strcat(orderDetails, "Lychee Tea x");
+                sprintf(orderDetails + strlen(orderDetails), "Lychee Tea x%d, ", quantity);
                 totalPrice += quantity * 14000;
                 break;
             case 6:
-                strcat(orderDetails, "Ice Tea x");
+                sprintf(orderDetails + strlen(orderDetails), "Ice Tea x%d, ", quantity);
                 totalPrice += quantity * 10000;
                 break;
             case 7:
-                strcat(orderDetails, "Nasi Goreng x");
+                sprintf(orderDetails + strlen(orderDetails), "Nasi Goreng x%d, ", quantity);
                 totalPrice += quantity * 30000;
                 break;
             case 8:
-                strcat(orderDetails, "Mie Bangladesh x");
+                sprintf(orderDetails + strlen(orderDetails), "Mie Bangladesh x%d, ", quantity);
                 totalPrice += quantity * 25000;
                 break;
             case 9:
-                strcat(orderDetails, "Sandwich x");
+                sprintf(orderDetails + strlen(orderDetails), "Sandwich x%d, ", quantity);
                 totalPrice += quantity * 20000;
                 break;
             case 10:
-                strcat(orderDetails, "Macaroni x");
+                sprintf(orderDetails + strlen(orderDetails), "Macaroni x%d, ", quantity);
+                totalPrice += quantity * 16000;
+                break;
+            case 11:
+                sprintf(orderDetails + strlen(orderDetails), "Ice Cream x%d, ", quantity);
+                totalPrice += quantity * 18000;
+                break;
+            case 12:
+                sprintf(orderDetails + strlen(orderDetails), "Salad Buah x%d, ", quantity);
                 totalPrice += quantity * 15000;
                 break;
             default:
@@ -160,6 +220,7 @@ int takeOrder(char *orderDetails) {
         scanf("%d", &continueOrder);
     } while (continueOrder == 1);
 
+    updateOrderStatus("Pesanan sedang diproses.");
     return totalPrice;
 }
 
@@ -180,6 +241,7 @@ void displayPayment(int totalPrice, const char *customerName, const char *orderD
     } else if (paymentMethod == 2) {
         printf("Gunakan kode pembayaran untuk transaksi.\n");
         saveTransaction(customerName, orderDetails, totalPrice);
+        updateOrderStatus("Pesanan telah selesai dan siap disajikan."); 
     } else {
         printf("Metode pembayaran tidak valid.\n");
     }
@@ -196,6 +258,7 @@ void processCashPayment(int totalPrice, const char *customerName, const char *or
         change = cash - totalPrice;
         if (change > 0) printf("Kembalian Anda: Rp %d\n", change);
         saveTransaction(customerName, orderDetails, totalPrice);
+        updateOrderStatus("Pesanan telah selesai dan siap disajikan.");
     } else {
         printf("Uang kurang. Silakan ulangi pembayaran.\n");
         processCashPayment(totalPrice, customerName, orderDetails);
@@ -235,16 +298,63 @@ void rekapitulasi() {
 }
 
 // Fungsi reservasi meja
+// Fungsi reservasi meja
 void reserveTable() {
-    int tableNumber;
+    char tableStatus[10][10] = {"Kosong", "Kosong", "Kosong", "Kosong", "Kosong", 
+                                "Kosong", "Kosong", "Kosong", "Kosong", "Kosong"};
+    char customerName[50];
+    char tableNumber[3];
+    int hour, minute, countdownTime;
 
-    printf("Masukkan nomor meja yang ingin dipesan (1-10): ");
-    scanf("%d", &tableNumber);
+    printf("===== Reservasi Meja =====\n");
+    printf("Masukkan nama pelanggan: ");
+    scanf(" %[^\n]", customerName);
 
-    if (tableNumber >= 1 && tableNumber <= 10) {
-        printf("Meja nomor %d berhasil dipesan.\n", tableNumber);
-    } else {
-        printf("Nomor meja tidak valid.\n");
-        reserveTable();
+    // Tampilkan status meja
+    printf("\nStatus Meja:\n");
+    for (int i = 0; i < 10; i++) {
+        printf("Meja A%d: %s\n", i + 1, tableStatus[i]);
     }
+
+    printf("\nMasukkan nomor meja yang ingin dipesan (A1-A10): ");
+    scanf("%s", tableNumber);
+
+    // Validasi nomor meja
+    int tableIndex = atoi(&tableNumber[1]) - 1;
+    if (tableNumber[0] != 'A' || tableIndex < 0 || tableIndex >= 10) {
+        printf("Nomor meja tidak valid. Silakan coba lagi.\n");
+        return;
+    }
+
+    if (strcmp(tableStatus[tableIndex], "Kosong") != 0) {
+        printf("Meja %s sudah dipesan. Silakan pilih meja lain.\n", tableNumber);
+        return;
+    }
+
+    printf("Masukkan jam booking (format 24-jam, HH MM): ");
+    scanf("%d %d", &hour, &minute);
+
+    printf("Meja %s berhasil dipesan untuk %02d:%02d.\n", tableNumber, hour, minute);
+    strncpy(tableStatus[tableIndex], "Dipesan", sizeof(tableStatus[tableIndex]));
+
+    // Hitungan mundur hingga waktu booking
+    printf("\nHitungan Mundur:\n");
+    countdownTime = (hour * 60 + minute) - (localtime(&(time_t){time(NULL)})->tm_hour * 60 +
+                                            localtime(&(time_t){time(NULL)})->tm_min);
+    if (countdownTime <= 0) {
+        printf("Waktu booking sudah lewat. Silakan pilih waktu yang valid.\n");
+        strncpy(tableStatus[tableIndex], "Kosong", sizeof(tableStatus[tableIndex]));
+        return;
+    }
+
+    while (countdownTime > 0) {
+        printf("Sisa waktu: %d menit\n", countdownTime);
+        countdownTime--;
+        sleep(60); // Tunggu 1 menit
+    }
+
+    printf("Waktu reservasi meja %s telah tiba!\n", tableNumber);
+
+    // Perbarui status meja
+    strncpy(tableStatus[tableIndex], "Kosong", sizeof(tableStatus[tableIndex]));
 }
