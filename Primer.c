@@ -2,6 +2,9 @@
 #include <string.h>
 #include <stdlib.h>
 #include <time.h>
+#include <conio.h>
+#define MAX_CUSTOMERS 10
+#define PASSWORD_LENGTH 20
 #define TOTAL_TABLES 10
 #define NAME_LENGTH 50
 
@@ -13,6 +16,7 @@ void displayPayment(int totalPrice, const char *customerName, const char *orderD
 void welcomeScreen();
 void displayMenu();
 void processCashPayment(int totalPrice, const char *customerName, const char *orderDetails);
+void processCashlessPayment(int totalPrice, const char *orderDetails);
 void login();
 void saveTransaction(const char *customerName, const char *orderDetails, int totalPrice);
 void rekapitulasi();
@@ -183,11 +187,85 @@ void displayPayment(int totalPrice, const char *customerName, const char *orderD
     if (paymentMethod == 1) {
         processCashPayment(totalPrice, customerName, orderDetails);
     } else if (paymentMethod == 2) {
-        printf("Gunakan kode pembayaran untuk transaksi.\n");
-        saveTransaction(customerName, orderDetails, totalPrice);
+        processCashlessPayment(totalPrice, orderDetails);
     } else {
         printf("Metode pembayaran tidak valid.\n");
     }
+}
+
+typedef struct {
+    char name[NAME_LENGTH];
+    char password[PASSWORD_LENGTH];
+    int balance;
+} Customer;
+
+//asumsi data pelanggan
+Customer customers[MAX_CUSTOMERS] = {
+    {"Salma", "1234", 100000},
+    {"Hapiss", "abcd", 75000},
+    {"Nopell", "5678", 200000}
+};
+
+//untuk menemukan data pelanggan
+int findCustomer(const char *name) {
+    for (int i = 0; i < MAX_CUSTOMERS; i++) {
+        if (strcmp(customers[i].name, name) == 0) {
+            return i;
+        }
+    }
+    return -1;
+}
+
+//fungsi input password pelanggan
+void inputPassword(char *password) {
+    char ch;
+    int i = 0;
+
+    printf("Masukkan password: ");
+    while ((ch = getch()) != '\r') {
+        if (ch == '\b' && i > 0) {
+            printf("\b \b");
+            i--;
+        } else if (i < PASSWORD_LENGTH - 1 && ch != '\b') {
+            printf("*");
+            password[i++] = ch;
+        }
+    }
+    password[i] = '\0';
+    printf("\n");
+}
+
+//fungsi pembayaran non tunai
+void processCashlessPayment(int totalPrice, const char *orderDetails) {
+    char customerName[NAME_LENGTH], password[PASSWORD_LENGTH];
+    int customerIndex;
+
+    printf("Masukkan nama pelanggan: ");
+    getchar();
+    fgets(customerName, NAME_LENGTH, stdin);
+    customerName[strcspn(customerName, "\n")] = '\0';
+    customerIndex = findCustomer(customerName);
+    if (customerIndex == -1) {
+        printf("Pelanggan tidak ditemukan. Pastikan Anda terdaftar di aplikasi.\n");
+        return;
+    }
+
+    inputPassword(password);
+
+    if (strcmp(customers[customerIndex].password, password) != 0) {
+        printf("Password salah. Pembayaran gagal.\n");
+        return;
+    }
+
+    if (customers[customerIndex].balance < totalPrice) {
+        printf("Saldo tidak mencukupi. Pembayaran gagal.\n");
+        return;
+    }
+
+    customers[customerIndex].balance -= totalPrice;
+    printf("Pembayaran berhasil! Sisa saldo Anda: Rp %d\n", customers[customerIndex].balance);
+
+    saveTransaction(customers[customerIndex].name, orderDetails, totalPrice);
 }
 
 // Fungsi pembayaran tunai
