@@ -13,7 +13,7 @@ typedef struct
 
 void displayPayment(int totalPrice, const char *customerName, const char *orderDetails);
 void processCashlessPayment(int totalPrice, const char *orderDetails);
-void processCashPayment(int totalPrice, const char *customerName, const char *orderDetails);
-void saveTransaction(const char *customerName, const char *orderDetails, int totalPrice);
+void processCashPayment(int totalPrice, const char *payment, const char *customerName, const char *orderDetails);
+void saveTransaction(const char *customerName, const char *orderDetails, int totalPrice, const char *payment, const char *accountName);
 
 #endif

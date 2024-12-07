@@ -1,20 +1,7 @@
-Nama: Naufal
-Waktu: 30-11-2024 08:58:14
-Pesanan: Kopi Hitam x2, Lemon Tea x3, 
-Total: Rp 66000
-
-Nama: Salma
-Waktu: 30-11-2024 08:58:57
-Pesanan: Lemon Tea x2, 
-Total: Rp 24000
-
-Nama: Nopell
-Waktu: 03-12-2024 13:27:25
-Pesanan: Cappuccino x4, 
-Total: Rp 100000
-
-Nama: Nopell
-Waktu: 06-12-2024 01:29:47
-Pesanan: Lemon Tea x5, 
-Total: Rp 60000
-
+Nama Pelanggan: Nopell
+Waktu: 07-12-2024 08:05:01
+Pesanan: Kopi Hitam x1, 
+Total Harga: Rp 15000
+Metode Pembayaran: cashless
+Nama Akun Pembayaran: Nopell
+====================================
