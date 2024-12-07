@@ -32,27 +32,24 @@ void processCashlessPayment(int totalPrice, const char *orderDetails) {
     int customerIndex;
     int attempts = 0;
 
-    // Meminta nama akun pembayaran
     while (1) {
         printf("Masukkan nama akun pembayaran: ");
         getchar();
         fgets(accountName, NAME_LENGTH, stdin);
         accountName[strcspn(accountName, "\n")] = '\0';
 
-        // Validasi nama akun pembayaran
         customerIndex = findCustomer(accountName);
         if (customerIndex == -1) {
             printf("Nama akun pembayaran tidak ditemukan. Silakan coba lagi.\n");
         } else {
-            break; // Akun ditemukan
+            break;
         }
     }
 
-    // Percobaan maksimal password: 3 kali
     while (attempts < 3) {
         attempts++;
 
-        inputPassword(password); // Meminta input password (tersembunyi)
+        inputPassword(password);
 
         if (strcmp(customers[customerIndex].password, password) == 0) {
             // Cek saldo
@@ -62,11 +59,9 @@ void processCashlessPayment(int totalPrice, const char *orderDetails) {
                 return;
             }
 
-            // Jika saldo mencukupi, lanjutkan pembayaran
             customers[customerIndex].balance -= totalPrice;
             printf("Pembayaran berhasil menggunakan cashless! Sisa saldo Anda: Rp %d\n", customers[customerIndex].balance);
 
-            // Simpan transaksi
             saveTransaction(customers[customerIndex].name, orderDetails, totalPrice, "cashless", accountName);
             return;
         } else {
@@ -74,7 +69,6 @@ void processCashlessPayment(int totalPrice, const char *orderDetails) {
         }
     }
 
-    // Jika gagal memasukkan password setelah 3 kali percobaan
     printf("Percobaan password habis.\n");
     handlePaymentOptions(totalPrice, orderDetails, accountName, customerIndex);
 }
