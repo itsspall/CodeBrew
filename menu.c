@@ -2,10 +2,31 @@
 #include <string.h>
 #include "menu.h"
 #include "customer.h"
+#include <time.h>
 #include "welcome.h"
 #include "payment.h"
 #include "reservation.h"
 #include "rekapitulasi.h"
+
+void displayOrderStatus(time_t orderTime) {
+    if (orderTime == 0) {
+        printf("Belum ada pesanan yang dibuat.\n");
+        return;
+    }
+
+    time_t currentTime;
+    time(&currentTime);
+
+    int elapsedSeconds = (int)difftime(currentTime, orderTime);
+    printf("Status Pesanan:\n");
+    if (elapsedSeconds > 60) {
+        printf("- Selesai\n");
+    } else if (elapsedSeconds > 30) {
+        printf("- Sedang Diproses\n");
+    } else {
+        printf("- Baru Dibuat\n");
+    }
+}
 
 int takeOrder(char *orderDetails) {
     int menuItem, quantity, totalPrice = 0;
@@ -74,6 +95,10 @@ int takeOrder(char *orderDetails) {
 
         printf("Pesan lagi? (1 untuk Ya, 0 untuk Tidak): ");
         scanf("%d", &continueOrder);
+
+        if (continueOrder == 1) {
+            strcat(orderDetails, ", ");
+        }
     } while (continueOrder == 1);
 
     return totalPrice;

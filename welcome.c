@@ -16,7 +16,7 @@ void displayMenu() {
     printf("2. Latte        - Rp 20.000\t8.  Mie Bangladesh   - Rp 25.000\n");
     printf("3. Cappuccino   - Rp 25.000\t9.  Sandwich         - Rp 20.000\n");
     printf("4. Lemon Tea    - Rp 12.000\t10. Macaroni         - Rp 15.000\n");
-    printf("5. Lychee Tea   - Rp 14.000\t11. Salad Buah       - Rp 15.000\n");
+    printf("5. Lychee Tea   - Rp 14.000\t11. Salad            - Rp 15.000\n");
     printf("6. Ice Tea      - Rp 10.000\t12. Salad Buah       - Rp 15.000\n");
     printf("===========================\t=================================\n");
 }
