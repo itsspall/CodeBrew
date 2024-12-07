@@ -8,8 +8,13 @@ Waktu: 30-11-2024 08:58:57
 Pesanan: Lemon Tea x2, 
 Total: Rp 24000
 
-Nama: salma
-Waktu: 03-12-2024 04:40:23
-Pesanan: Nasi Goreng x2, 
+Nama: Nopell
+Waktu: 03-12-2024 13:27:25
+Pesanan: Cappuccino x4, 
+Total: Rp 100000
+
+Nama: Nopell
+Waktu: 06-12-2024 01:29:47
+Pesanan: Lemon Tea x5, 
 Total: Rp 60000
 
