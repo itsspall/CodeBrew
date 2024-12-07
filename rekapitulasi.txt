@@ -1,0 +1,7 @@
+Nama Pelanggan: Nopell
+Waktu: 07-12-2024 17:24:32
+Pesanan: Latte x1, 
+Total Harga: Rp 20000
+Metode Pembayaran: cashless
+Nama Akun Pembayaran: Nopell
+====================================

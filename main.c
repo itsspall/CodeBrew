@@ -16,7 +16,9 @@ int main() {
     int choice, totalPrice;
     char orderDetails[500], customerName[50];
     char tables[TOTAL_TABLES][NAME_LENGTH] = {""};
-    time_t orderTime; // Waktu simulasi pesanan
+    time_t orderTime;
+    int startTimes[TOTAL_TABLES] = {0};
+    int endTimes[TOTAL_TABLES] = {0};
 
     do {
         printf("========= Selamat Datang di CodeBrew =========\n");
@@ -27,7 +29,7 @@ int main() {
         scanf("%d", &userChoice);
 
         if (userChoice == 1) {
-            login(); // Login admin
+            login();
             do {
                 welcomeScreen();
                 printf("1. Pilih Menu\n");
@@ -42,12 +44,12 @@ int main() {
                         printf("Masukkan nama pelanggan: ");
                         scanf(" %[^\n]", customerName);
                         totalPrice = takeOrder(orderDetails);
-                        time(&orderTime); // Simpan waktu pesanan dibuat
+                        time(&orderTime);
                         displayPayment(totalPrice, customerName, orderDetails);
                         break;
                     case 2:
-                        displayTables(tables);
-                        makeReservation(tables);
+                        displayTables(tables, startTimes, endTimes, TOTAL_TABLES);
+                        makeReservation(tables, startTimes, endTimes, TOTAL_TABLES);
                         break;
                     case 3:
                         rekapitulasi();
