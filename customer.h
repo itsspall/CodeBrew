@@ -16,5 +16,4 @@ extern Customer customers[MAX_CUSTOMERS];
 int findCustomer(const char *name);
 void inputPassword(char *password);
 void login();
-
 #endif
