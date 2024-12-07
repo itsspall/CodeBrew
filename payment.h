@@ -15,5 +15,6 @@ void displayPayment(int totalPrice, const char *customerName, const char *orderD
 void processCashlessPayment(int totalPrice, const char *orderDetails);
 void processCashPayment(int totalPrice, const char *payment, const char *customerName, const char *orderDetails);
 void saveTransaction(const char *customerName, const char *orderDetails, int totalPrice, const char *payment, const char *accountName);
+void handlePaymentOptions(int totalPrice, const char *orderDetails, const char *accountName, int customerIndex);
 
 #endif

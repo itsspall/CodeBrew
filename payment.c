@@ -32,50 +32,41 @@ void processCashlessPayment(int totalPrice, const char *orderDetails) {
     int customerIndex;
     int attempts = 0;
 
+    // Meminta nama akun pembayaran
     while (1) {
         printf("Masukkan nama akun pembayaran: ");
         getchar();
         fgets(accountName, NAME_LENGTH, stdin);
         accountName[strcspn(accountName, "\n")] = '\0';
 
+        // Validasi nama akun pembayaran
         customerIndex = findCustomer(accountName);
         if (customerIndex == -1) {
             printf("Nama akun pembayaran tidak ditemukan. Silakan coba lagi.\n");
         } else {
-            break;
+            break; // Akun ditemukan
         }
     }
 
+    // Percobaan maksimal password: 3 kali
     while (attempts < 3) {
         attempts++;
 
-        inputPassword(password);
+        inputPassword(password); // Meminta input password (tersembunyi)
 
         if (strcmp(customers[customerIndex].password, password) == 0) {
+            // Cek saldo
             if (customers[customerIndex].balance < totalPrice) {
-                int choice;
                 printf("Saldo tidak mencukupi. Anda memiliki dua opsi:\n");
-                printf("1. Batalkan pesanan\n");
-                printf("2. Ubah metode pembayaran menjadi cash\n");
-                printf("Pilih opsi Anda (1/2): ");
-                scanf("%d", &choice);
-
-                if (choice == 1) {
-                    printf("Pesanan telah dibatalkan.\n");
-                    return;
-                } else if (choice == 2) {
-                    printf("Mengubah metode pembayaran menjadi cash...\n");
-                    processCashPayment(totalPrice, "cash", customers[customerIndex].name, orderDetails);
-                    return;
-                } else {
-                    printf("Opsi tidak valid. Pesanan dibatalkan secara otomatis.\n");
-                    return;
-                }
+                handlePaymentOptions(totalPrice, orderDetails, accountName, customerIndex);
+                return;
             }
 
+            // Jika saldo mencukupi, lanjutkan pembayaran
             customers[customerIndex].balance -= totalPrice;
             printf("Pembayaran berhasil menggunakan cashless! Sisa saldo Anda: Rp %d\n", customers[customerIndex].balance);
 
+            // Simpan transaksi
             saveTransaction(customers[customerIndex].name, orderDetails, totalPrice, "cashless", accountName);
             return;
         } else {
@@ -83,7 +74,31 @@ void processCashlessPayment(int totalPrice, const char *orderDetails) {
         }
     }
 
-    printf("Percobaan password habis. Pesanan gagal.\n");
+    // Jika gagal memasukkan password setelah 3 kali percobaan
+    printf("Percobaan password habis.\n");
+    handlePaymentOptions(totalPrice, orderDetails, accountName, customerIndex);
+}
+
+// Fungsi untuk menangani opsi jika gagal
+void handlePaymentOptions(int totalPrice, const char *orderDetails, const char *accountName, int customerIndex) {
+    int choice;
+    printf("Anda memiliki dua opsi:\n");
+    printf("1. Batalkan pesanan\n");
+    printf("2. Ubah metode pembayaran menjadi cash\n");
+    printf("Pilih opsi Anda (1/2): ");
+    scanf("%d", &choice);
+
+    if (choice == 1) {
+        printf("Pesanan telah dibatalkan.\n");
+        return;
+    } else if (choice == 2) {
+        printf("Mengubah metode pembayaran menjadi cash...\n");
+        processCashPayment(totalPrice, "cash", customers[customerIndex].name, orderDetails);
+        return; 
+    } else {
+        printf("Opsi tidak valid. Pesanan dibatalkan secara otomatis.\n");
+        return;
+    }
 }
 
 // Fungsi pembayaran tunai

@@ -5,3 +5,9 @@ Total Harga: Rp 15000
 Metode Pembayaran: cashless
 Nama Akun Pembayaran: Nopell
 ====================================
+Nama Pelanggan: Nopell
+Waktu: 07-12-2024 11:12:29
+Pesanan: Latte x3, 
+Total Harga: Rp 60000
+Metode Pembayaran: cash
+====================================
