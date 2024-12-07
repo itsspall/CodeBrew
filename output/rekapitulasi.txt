@@ -1,0 +1,20 @@
+Nama: a
+Waktu: 30-11-2024 19:04:12
+Pesanan: Kopi Hitam x1, 
+Total: Rp 15000
+
+Nama: Dewi
+Waktu: 30-11-2024 19:11:22
+Pesanan: Nasi Goreng x1, 
+Total: Rp 30000
+
+Nama: Zahra
+Waktu: 30-11-2024 19:29:41
+Pesanan: Macaroni x2, 
+Total: Rp 30000
+
+Nama: Alvi
+Waktu: 03-12-2024 14:02:09
+Pesanan: Kopi Hitam x2, 
+Total: Rp 30000
+
