@@ -6,6 +6,7 @@
 #include "menu.h"
 #include "welcome.h"
 #include "rekapitulasi.h"
+#include "admin.h"
 #include <time.h>
 
 #define TOTAL_TABLES 10
