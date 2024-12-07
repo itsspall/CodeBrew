@@ -14,6 +14,8 @@ int main() {
     int choice, totalPrice;
     char orderDetails[500], customerName[50];
     char tables[TOTAL_TABLES][NAME_LENGTH] = {""};
+    int startTimes[TOTAL_TABLES] = {0};
+    int endTimes[TOTAL_TABLES] = {0};
 
     login();
 
@@ -34,8 +36,8 @@ int main() {
                 displayPayment(totalPrice, customerName, orderDetails);
                 break;
             case 2:
-                displayTables(tables);
-                makeReservation(tables);
+                displayTables(tables, startTimes, endTimes, TOTAL_TABLES);
+                makeReservation(tables, startTimes, endTimes, TOTAL_TABLES);
                 break;
             case 3:
                 rekapitulasi();
